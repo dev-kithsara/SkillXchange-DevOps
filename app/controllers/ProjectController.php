@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
         $this->projectModel->create($data);
 
-        header("Location: /SkillXchange/public/ProjectController/index");
+        header("Location: " . URLROOT . "/ProjectController/index");
         exit;
     }
 
@@ -68,7 +68,7 @@ class ProjectController extends Controller
 
         $this->projectModel->update($id, $data);
 
-        header("Location: /SkillXchange/public/ProjectController/index");
+        header("Location: " . URLROOT . "/ProjectController/index");
         exit;
     }
 
@@ -77,7 +77,7 @@ class ProjectController extends Controller
     {
         $this->projectModel->delete($id);
 
-        header("Location: /SkillXchange/public/ProjectController/index");
+        header("Location: " . URLROOT . "/ProjectController/index");
         exit;
     }
 

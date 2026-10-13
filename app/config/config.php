@@ -4,8 +4,22 @@
 define('APPROOT', dirname(dirname(__FILE__)) . '/app');
 
 // Base URL of your project
-define('BASE_URL', 'http://localhost/SkillXchange/public');
-define('URLROOT', 'http://localhost/SkillXchange/public');
+if (getenv('APP_URL')) {
+    define('BASE_URL', rtrim(getenv('APP_URL'), '/'));
+    define('URLROOT', rtrim(getenv('APP_URL'), '/'));
+} elseif (isset($_SERVER['HTTP_HOST'])) {
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+    if (strpos($_SERVER['REQUEST_URI'] ?? '', '/SkillXchange/public') !== false) {
+        define('BASE_URL', $protocol . '://' . $_SERVER['HTTP_HOST'] . '/SkillXchange/public');
+        define('URLROOT', $protocol . '://' . $_SERVER['HTTP_HOST'] . '/SkillXchange/public');
+    } else {
+        define('BASE_URL', $protocol . '://' . $_SERVER['HTTP_HOST']);
+        define('URLROOT', $protocol . '://' . $_SERVER['HTTP_HOST']);
+    }
+} else {
+    define('BASE_URL', 'http://localhost/SkillXchange/public');
+    define('URLROOT', 'http://localhost/SkillXchange/public');
+}
 define('SYSTEM_REWARD_SENDER_ID', 1);
 define('APP_TIMEZONE', 'Asia/Colombo');
 define('DB_TIMEZONE_OFFSET', '+05:30');

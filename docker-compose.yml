@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # 1. NGINX Web Server (Reverse Proxy & Static file handler)
+  web:
+    image: nginx:alpine
+    container_name: skillxchange_nginx
+    restart: unless-stopped
+    ports:
+      - "8085:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - skillxchange-net
+
+  # 2. PHP-FPM Application Server (Backend Processor)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skillxchange_app
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: skillxchange
+      DB_PORT: 3306
+      APP_URL: http://localhost:8085
+    depends_on:
+      - db
+    networks:
+      - skillxchange-net
+
+  # 3. MariaDB Database Server
+  db:
+    image: mariadb:10.11
+    container_name: skillxchange_db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: skillxchange
+    volumes:
+      - skillxchange_db_data:/var/lib/mysql
+      - ./DB.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    networks:
+      - skillxchange-net
+
+  # 4. phpMyAdmin (Database GUI Tool)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: skillxchange_pma
+    restart: unless-stopped
+    ports:
+      - "8086:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - db
+    networks:
+      - skillxchange-net
+
+volumes:
+  skillxchange_db_data:
+
+networks:
+  skillxchange-net:
+    driver: bridge

@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+.gitignore.save
+
+# Logs & temp
+logs/
+*.log
+
+# Documentation & notes (production image ekata me markdown files one na)
+*.md
+docs/
+
+# Database dumps (Container eka build weddi image eka athulata DB dump eka yanna one na)
+*.sql
+DB.sql
+
+# Local configs / environment files (security)
+*.local.php
+.env
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore

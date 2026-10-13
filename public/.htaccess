@@ -3,7 +3,7 @@ Options -MultiViews
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /SkillXchange/public/
+  RewriteBase /
 
   # Allow direct access to files and directories that actually exist
   RewriteCond %{REQUEST_FILENAME} !-f

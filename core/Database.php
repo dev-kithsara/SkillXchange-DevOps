@@ -9,7 +9,8 @@ class Database {
     private $stmt;
 
     public function __construct() {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+        $port = defined('DB_PORT') ? ';port=' . DB_PORT : '';
+        $dsn = 'mysql:host=' . $this->host . $port . ';dbname=' . $this->dbname;
         $options = [
             PDO::ATTR_PERSISTENT => true, 
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
