@@ -53,10 +53,24 @@ class Core
     -------------------------------- */
     public function getUrl()
     {
-        if (isset($_GET['url'])) {
-            $url = rtrim($_GET['url'], '/');
-            return explode('/', filter_var($url, FILTER_SANITIZE_URL));
+        if (!empty($_GET['url'])) {
+            $url = trim($_GET['url'], '/');
+            if ($url !== '' && $url !== 'index.php') {
+                return explode('/', filter_var($url, FILTER_SANITIZE_URL));
+            }
         }
+
+        if (!empty($_SERVER['REQUEST_URI'])) {
+            $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            if (strpos($path, '/SkillXchange/public') === 0) {
+                $path = substr($path, strlen('/SkillXchange/public'));
+            }
+            $url = trim($path, '/');
+            if ($url !== '' && $url !== 'index.php') {
+                return explode('/', filter_var($url, FILTER_SANITIZE_URL));
+            }
+        }
+
         return [];
     }
 }

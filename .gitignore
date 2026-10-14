@@ -1,60 +1,112 @@
-MERGE_SUMMARY.md
+# ==============================================================================
+# SkillXchange - .gitignore
+# ==============================================================================
 
-# Database migration files
-database/migrations/2025_11_20_000000_create_notifications_table.sql
-database/migrations/2025_11_20_010000_create_project_chat_messages.sql
-database/migrations/2025_11_20_add_project_app_columns.sql
-database/migrations/2026_02_14_add_project_id_to_user_feedback.sql
-database/migrations/2026_02_17_add_context_support_to_feedback.sql
-database/migrations/2026_02_18_add_feedback_filtering_sorting.sql
-database/migrations/alter_project_applications.sql
-database/migrations/create_content_reports_table.sql
-database/migrations/create_feedback_reports.sql
-database/migrations/create_quiz_system_tables.sql
-database/migrations/create_task_management_tables.sql
-database/migrations/create_user_reports.sql
-database/migrations/create_wallet_system.sql
-database/migrations/FIXED_create_feedback_reports.sql
-database/migrations/QUICK_FIX_feedback_columns.sql
-database/migrations/SAFE_VERSION_feedback_columns.sql
-database/migrations/setup_reporting_system.sql
-database/migrations/add_moderator_role.sql
-database/migrations/OPTION_A_USE_MANAGER_ROLE.md
-database/migrations/fix_quiz_tables.sql
-database/migrations/fix_quizzes_add_status_column.sql
-DB.sql
+# ------------------------------------------------------------------------------
+# 1. Environment & Local Configuration (Keep credentials secret)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+app/config/db.local.php
+app/config/mail.local.php
+app/config/secrets.php
 
-# Documentation files
-COMPLETE_PROJECT_DOCUMENTATION.md
-PROJECT_OVERVIEW_FOR_AI.md
-MVC_STRUCTURE.md
-REPORTING_IMPLEMENTATION_SUMMARY.md
-REPORTING_QUICK_REFERENCE.md
-REPORTING_SYSTEM.md
-SETUP_INSTRUCTIONS.txt
-TESTING_GUIDE.md
-FEEDBACK_FILTERING_IMPLEMENTATION.md
-FEEDBACK_FIX_INSTRUCTIONS.md
-FEEDBACK_MODULE_IMPLEMENTATION.md
-FEEDBACK_REPORTING_IMPLEMENTATION_GUIDE.md
-FEEDBACK_UI_COMPLETE_GUIDE.md
-MODERATOR_ACCESS_IMPLEMENTATION_GUIDE.md
+# ------------------------------------------------------------------------------
+# 2. User Uploads (Ignore uploaded content, keep directory structure)
+# ------------------------------------------------------------------------------
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/profile_pictures/
+public/uploads/profile_pictures/*
+!public/uploads/profile_pictures/.gitkeep
+!public/uploads/org_certs/
+public/uploads/org_certs/*
+!public/uploads/org_certs/.gitkeep
 
-# Unused moderator files (project only has admins)
-app/views/layouts/moderator_sidebar.php
+# ------------------------------------------------------------------------------
+# 3. Logs & Runtime
+# ------------------------------------------------------------------------------
+*.log
+logs/*
+!logs/.gitkeep
 
-# Test data
+# ------------------------------------------------------------------------------
+# 4. Dependencies & Package Managers
+# ------------------------------------------------------------------------------
+/vendor/
+/node_modules/
+composer.phar
+
+# ------------------------------------------------------------------------------
+# 5. Operating System Files
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+desktop.ini
+
+# ------------------------------------------------------------------------------
+# 6. IDEs & Code Editors
+# ------------------------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+*.kdev4
+
+# ------------------------------------------------------------------------------
+# 7. Temporary, Backup & Archive Files
+# ------------------------------------------------------------------------------
+*.bak
+*.swp
+*.swo
+*~
+*.tmp
+*.save
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ------------------------------------------------------------------------------
+# 8. Temporary Database Dumps & Test Data (Preserves DB.sql)
+# ------------------------------------------------------------------------------
 insert-test-data.sql
+*backup*.sql
+*dump*.sql
+*.sql.gz
 
-# Document files
+# ------------------------------------------------------------------------------
+# 9. Office Documents & Drafts
+# ------------------------------------------------------------------------------
 *.doc
 *.docx
-*.pdf
-*.txt
 *.odt
 *.rtf
-app/config/db.local.php
-.DS_Store
-public/uploads/
-app/config/mail.local.php
 
+# ------------------------------------------------------------------------------
+# 10. Internal AI Guides & Implementation Notes
+# ------------------------------------------------------------------------------
+COMPLETE_PROJECT_DOCUMENTATION.md
+PROJECT_OVERVIEW_FOR_AI.md
+FEEDBACK_*.md
+REPORTING_*.md
+SETUP_INSTRUCTIONS.txt
+TESTING_GUIDE.md
+MODERATOR_ACCESS_IMPLEMENTATION_GUIDE.md
+
+# ------------------------------------------------------------------------------
+# 11. Deprecated / Unused Components
+# ------------------------------------------------------------------------------
+app/views/layouts/moderator_sidebar.php
+
+screen_shots

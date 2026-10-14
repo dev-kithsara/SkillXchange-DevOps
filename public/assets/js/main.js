@@ -183,5 +183,5 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('.matches-search-input');
     if (searchInput) searchInput.addEventListener('input', searchMatches);
 
-    console.log('Matches page loaded. URLROOT:', URLROOT);
+    console.log('Matches page loaded.');
 });

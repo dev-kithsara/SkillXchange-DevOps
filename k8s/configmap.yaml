@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skillxchange-config
+  namespace: skillxchange
+data:
+  APP_URL: "http://localhost:9095"
+  DB_HOST: "skillxchange-db"
+  DB_NAME: "skillxchange"
+  DB_PORT: "3306"
+  APP_TIMEZONE: "Asia/Colombo"

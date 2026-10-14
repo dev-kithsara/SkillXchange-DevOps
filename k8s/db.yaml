@@ -1,0 +1,77 @@
+# 1. Database Service (ClusterIP for internal app connectivity)
+apiVersion: v1
+kind: Service
+metadata:
+  name: skillxchange-db
+  namespace: skillxchange
+  labels:
+    app: skillxchange
+    tier: database
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+      name: mysql
+  selector:
+    app: skillxchange
+    tier: database
+  clusterIP: None    # Headless service (StatefulSet best practice)
+---
+# 2. Database StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: skillxchange-db
+  namespace: skillxchange
+  labels:
+    app: skillxchange
+    tier: database
+spec:
+  serviceName: "skillxchange-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skillxchange
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: skillxchange
+        tier: database
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb:10.11
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: skillxchange-secrets
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: skillxchange-config
+                  key: DB_NAME
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/mysql
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+  # Automated Storage Provisioning via kind default storage class
+  volumeClaimTemplates:
+    - metadata:
+        name: db-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 2Gi

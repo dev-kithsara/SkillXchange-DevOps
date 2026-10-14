@@ -55,6 +55,5 @@
 
 <!-- JavaScript -->
 <script src="<?php echo URLROOT; ?>/assets/js/main.js" defer></script>
-<script src="<?php echo URLROOT ?>/public/assets/js/formtoggle.js" defer></script>
 </body>
 </html>

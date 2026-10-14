@@ -1,0 +1,52 @@
+# Default values for skillxchange Helm chart.
+# This is a YAML-formatted file.
+
+replicaCount: 2
+
+image:
+  app:
+    repository: skillxchange-app
+    tag: latest
+    pullPolicy: IfNotPresent
+  nginx:
+    repository: nginx
+    tag: alpine
+    pullPolicy: IfNotPresent
+  db:
+    repository: mariadb
+    tag: "10.11"
+    pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080
+
+database:
+  name: skillxchange
+  user: root
+  password: root
+  storage: 2Gi
+
+resources:
+  web:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+  db:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+  targetMemoryUtilizationPercentage: 75
